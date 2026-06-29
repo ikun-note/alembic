@@ -1,0 +1,7 @@
+# Non-secret application config (CONFIG layer). Copy to config.toml and adjust.
+# Secrets (password) must NOT go here; put them in backend/.env.
+
+host = "localhost"
+port = 5432
+user = "alembic_lab"
+name = "alembic_lab"

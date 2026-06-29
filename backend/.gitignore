@@ -1,0 +1,10 @@
+# Instance config (non-secret defaults live in config.example.toml)
+config.toml
+
+# Secrets
+.env
+
+# Python
+__pycache__/
+*.pyc
+.venv/
