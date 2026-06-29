@@ -1,0 +1,13 @@
+id: "FEAT-alembic-pg-exploration-7ace2a"
+type: "feature"
+slug: "alembic-pg-exploration"
+title: "Alembic + PostgreSQL 全栈探究搭建"
+status: "open"
+priority: "medium"
+owner: "BE"
+tags:
+  - "alembic"
+  - "postgres"
+  - "migration"
+created_at: "2026-06-29"
+updated_at: "2026-06-29"
