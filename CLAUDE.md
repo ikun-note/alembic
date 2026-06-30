@@ -10,10 +10,10 @@
 Alembic/
 ├── .dev/compose.yaml          # podman compose 起 postgres:16
 ├── .docs/                     # 需求 / 架构 / 测试 / issue 文档
+├── docs/                      # 迁移操作 / 发版 / 最佳实践指南
 ├── backend/                   # FastAPI + SQLAlchemy + Alembic + psycopg3
-│   ├── config.toml            # 非密钥应用配置 (CONFIG 层)
-│   ├── config.example.toml    # 配置模板 (提交)
-│   ├── .env                   # 密钥 (gitignore)
+│   ├── .env.example           # 配置模板 (提交)
+│   ├── .env                   # 配置 (gitignore)
 │   ├── alembic.ini            # sqlalchemy.url 留空
 │   ├── migrations/            # env.py + versions/
 │   └── app/                   # main / core / db / models / schemas / api / services
@@ -28,7 +28,7 @@ Alembic/
 
 ## 配置分层
 
-优先级 CLI > ENV > CONFIG > DEFAULT. 密钥只在 ENV 层 (`.env`), 不落盘. 应用与 env.py 共用 pydantic-settings 的 Settings 对象, 同时读 `config.toml` 与 `.env`. 详见 `.docs/architectures/alembic-setup.md`.
+优先级 CLI > ENV > DEFAULT. 配置统一在 `.env` (密钥不进配置文件). 应用与 env.py 共用 pydantic-settings 的 Settings 对象. 详见 `.docs/architectures/alembic-setup.md`.
 
 ## 常用命令
 

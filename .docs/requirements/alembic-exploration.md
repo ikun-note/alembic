@@ -8,7 +8,7 @@
 
 - 跑通 Alembic 在容器化 PG 上的完整链路: 初始化、自动生成、执行、回滚
 - 以全栈应用为载体, 让迁移作用于真实数据, 可在前端观察迁移影响
-- 沉淀 PostgreSQL 友好的配置基线: 配置分层 (TOML + .env)、命名约定、env.py 写法
+- 沉淀 PostgreSQL 友好的配置基线: 配置统一 `.env`、命名约定、env.py 写法
 - 覆盖 Schema 迁移、数据迁移与进阶能力, 每类均有可运行示例
 
 ## 用户流程 / 页面结构
@@ -31,7 +31,7 @@
 | --- | --- | --- |
 | FR-1 | 单仓结构与依赖 | `backend/`、`frontend/` 骨架就位, 各自依赖可装可跑 |
 | FR-2 | PG 容器化环境 | podman compose 起 PG 16, 后端可连上 |
-| FR-3 | 配置分层 | `config.toml` 管非密钥配置; 密码走 `.env`; Settings 汇总 DEFAULT + TOML + ENV |
+| FR-3 | 配置统一 | 配置统一在 `.env` (密钥不落配置文件); Settings 汇总 DEFAULT + ENV |
 | FR-4 | 命名约定 | MetaData 配 naming_convention, 约束名稳定可读 |
 | FR-5 | 后端 FastAPI CRUD + DTO | Article 增删改查 API 可用, 请求 / 响应经 Pydantic 校验 |
 | FR-6 | 前端数据录入与查看 | 录入表单可新建 / 编辑, 列表可查看, 调用后端 API |
@@ -48,7 +48,7 @@
 
 - 数据库限定 PostgreSQL 16, 由容器化提供
 - 驱动统一 psycopg3, 不引入 asyncpg
-- 配置分层遵循 CLI > ENV > CONFIG > DEFAULT, 密钥不落盘
+- 配置优先级 CLI > ENV > DEFAULT, 密钥不进配置文件
 - 前端只做数据录入与查看, 不触发迁移
 - 以探究为主, 不追求生产级高可用、并发迁移锁、CI / CD 集成等运维深度
 - 迁移示例围绕 Article 载体模型构造, 不接入真实业务

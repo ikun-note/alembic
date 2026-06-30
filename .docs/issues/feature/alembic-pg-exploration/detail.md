@@ -8,14 +8,14 @@
 
 - 跑通 Alembic 在容器化 PG 上的完整链路: 初始化、自动生成、执行、回滚
 - 以全栈应用为载体, 让迁移作用于真实数据, 可在前端观察迁移影响
-- 沉淀 PostgreSQL 友好的配置基线: 配置分层 (TOML + .env)、命名约定、env.py 写法
+- 沉淀 PostgreSQL 友好的配置基线: 配置统一 `.env`、命名约定、env.py 写法
 - 覆盖 Schema 迁移、数据迁移与进阶能力, 每类均有可运行示例
 
 ## 范围
 
 - 单仓双目录: `backend/` (FastAPI + SQLAlchemy + Alembic + psycopg3) 与 `frontend/` (React + Vite + TS)
 - 容器化 PostgreSQL 16 (podman, 编排配置在 `.dev/`)
-- 配置: `config.toml` (非密钥) + `.env` (密钥), pydantic-settings 读 TOML + .env
+- 配置: 统一 `.env` (密钥 + 非密钥), pydantic-settings 读 .env
 - 前端只做数据录入与查看, 迁移走 CLI
 - 四类迁移示例: 基础配置、自动生成与 Schema 迁移、数据迁移、进阶 (分支 / 离线 / 编程式 / 异步)
 - 迁移验证闭环: 录入数据 → CLI 迁移 → 前端 / DB 观察
@@ -35,8 +35,8 @@
 按 `basic-config-system` 的 layering 落地, 各层汇总到单一 Settings 对象:
 
 - DEFAULT: 代码内兜底 (host、port、db name 等)
-- CONFIG: `config.toml` 承载非密钥应用配置, `alembic.ini` 承载 Alembic 非密钥项, 二者 `sqlalchemy.url` / 密码均不落盘
-- ENV: `.env` 注入连接参数与密码, 优先级高于 CONFIG; `.env` 入 gitignore, 提交 `.env.example` 与 `config.example.toml`
+- ENV: `.env` 注入连接参数与密码 (应用配置统一在此); `.env` 入 gitignore, 提交 `.env.example`
+- `alembic.ini`: Alembic 自身的非密钥配置 (script_location 等), 不含连接串与密码
 - CLI: 单次执行的显式覆盖
 
 密码属 Secret, 只在 ENV 层. 应用与 env.py 共用同一 Settings, 业务代码不零散读 env.

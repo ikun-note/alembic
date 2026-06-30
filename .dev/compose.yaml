@@ -3,8 +3,9 @@
 # Run: podman compose --env-file backend/.env -f .dev/compose.yaml up -d
 services:
   postgres:
-    image: postgres:16
+    image: postgres:17-alpine
     container_name: alembic_lab_pg
+    pull_policy: missing
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-alembic_lab}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in backend/.env}
