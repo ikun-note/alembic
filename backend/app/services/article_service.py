@@ -27,7 +27,7 @@ def list_articles(db: Session) -> list[ArticleRead]:
 
 
 def create_article(db: Session, payload: ArticleCreate) -> ArticleRead:
-    article = Article(title=payload.title, body=payload.body, status=payload.status)
+    article = Article(title=payload.title, content=payload.content, status=payload.status)
     db.add(article)
     db.commit()
     db.refresh(article)

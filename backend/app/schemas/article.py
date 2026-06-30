@@ -12,7 +12,7 @@ from pydantic import BaseModel, ConfigDict
 
 class ArticleBase(BaseModel):
     title: str
-    body: str = ""
+    content: str = ""
 
 
 class ArticleCreate(ArticleBase):
@@ -21,7 +21,7 @@ class ArticleCreate(ArticleBase):
 
 class ArticleUpdate(BaseModel):
     title: str | None = None
-    body: str | None = None
+    content: str | None = None
     status: str | None = None
 
 

@@ -1,4 +1,4 @@
-"""patch(0.0.4): rename body to content
+"""alpha0.0.4): rename body to content
 
 Revision ID: 6f3e753deaa3
 Revises: d1b79f3bfb7a

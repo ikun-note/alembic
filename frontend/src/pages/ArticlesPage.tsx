@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 export function ArticlesPage() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
+  const [content, setContent] = useState("");
   const [status, setStatus] = useState("draft");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -36,9 +36,9 @@ export function ArticlesPage() {
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
     try {
-      await api.createArticle({ title, body, status });
+      await api.createArticle({ title, content, status });
       setTitle("");
-      setBody("");
+      setContent("");
       setStatus("draft");
       await refresh();
     } catch (e) {
@@ -59,9 +59,9 @@ export function ArticlesPage() {
         />
         <textarea
           className={cn("rounded border", "p-2")}
-          placeholder="Body"
-          value={body}
-          onChange={(e) => setBody(e.target.value)}
+          placeholder="Content"
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
         />
         <select
           className={cn("rounded border", "p-2")}
@@ -95,7 +95,7 @@ export function ArticlesPage() {
                 [{article.status ?? "—"}]
               </span>
             </p>
-            <p className="text-sm text-muted-foreground">{article.body}</p>
+            <p className="text-sm text-muted-foreground">{article.content}</p>
           </li>
         ))}
       </ul>
