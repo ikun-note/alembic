@@ -19,7 +19,7 @@ class Article(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str] = mapped_column(String(500))
-    body: Mapped[str] = mapped_column(String(), default="")
+    content: Mapped[str] = mapped_column(String(), default="")
     status: Mapped[str | None] = mapped_column(String(20), default="draft")
     created_at: Mapped[datetime] = mapped_column(server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(server_default=func.now(), onupdate=func.now())
