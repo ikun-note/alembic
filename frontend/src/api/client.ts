@@ -9,6 +9,7 @@ export type Article = {
   id: number;
   title: string;
   body: string;
+  status: string | null;
   created_at: string;
   updated_at: string;
 };
@@ -16,6 +17,7 @@ export type Article = {
 export type ArticleInput = {
   title: string;
   body?: string;
+  status?: string;
 };
 
 const BASE = "/api";

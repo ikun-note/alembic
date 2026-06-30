@@ -13,6 +13,7 @@ export function ArticlesPage() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+  const [status, setStatus] = useState("draft");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -35,9 +36,10 @@ export function ArticlesPage() {
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
     try {
-      await api.createArticle({ title, body });
+      await api.createArticle({ title, body, status });
       setTitle("");
       setBody("");
+      setStatus("draft");
       await refresh();
     } catch (e) {
       setError(e instanceof Error ? e.message : "Failed to create");
@@ -61,6 +63,14 @@ export function ArticlesPage() {
           value={body}
           onChange={(e) => setBody(e.target.value)}
         />
+        <select
+          className={cn("rounded border", "p-2")}
+          value={status}
+          onChange={(e) => setStatus(e.target.value)}
+        >
+          <option value="draft">draft</option>
+          <option value="published">published</option>
+        </select>
         <button
           className={cn("rounded", "p-2", "bg-primary text-primary-foreground")}
           type="submit"
@@ -79,7 +89,12 @@ export function ArticlesPage() {
       <ul className={cn("flex flex-col", "mt-6 gap-2")}>
         {articles.map((article) => (
           <li key={article.id} className={cn("rounded border", "p-3")}>
-            <p className="font-medium">{article.title}</p>
+            <p className="font-medium">
+              {article.title}
+              <span className="ml-2 text-xs text-muted-foreground">
+                [{article.status ?? "—"}]
+              </span>
+            </p>
             <p className="text-sm text-muted-foreground">{article.body}</p>
           </li>
         ))}

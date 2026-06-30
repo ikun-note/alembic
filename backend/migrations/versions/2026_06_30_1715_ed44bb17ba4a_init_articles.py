@@ -1,4 +1,4 @@
-"""init articles
+"""rc(v0): init articles
 
 Revision ID: ed44bb17ba4a
 Revises: 

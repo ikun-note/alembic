@@ -16,12 +16,13 @@ class ArticleBase(BaseModel):
 
 
 class ArticleCreate(ArticleBase):
-    pass
+    status: str | None = "draft"
 
 
 class ArticleUpdate(BaseModel):
     title: str | None = None
     body: str | None = None
+    status: str | None = None
 
 
 class ArticleRead(ArticleBase):
@@ -30,3 +31,4 @@ class ArticleRead(ArticleBase):
     id: int
     created_at: datetime
     updated_at: datetime
+    status: str | None

@@ -30,7 +30,9 @@ podman compose --env-file backend/.env -f .dev/compose.yaml up -d
 迁移 (首次, 在 `backend/` 下):
 
 ```bash
-uv run alembic revision --autogenerate -m "init articles"   # 生成建表迁移
+# 仓库中已存在 init 脚本时不需要执行
+uv run alembic revision --autogenerate -m "rc(v0): init articles"   # 生成建表迁移
+# 建表, 初始化 DB 必须执行
 uv run alembic upgrade head                                 # 应用, 建 articles 表
 ```
 
