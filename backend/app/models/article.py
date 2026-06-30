@@ -18,7 +18,7 @@ class Article(Base):
     __tablename__ = "articles"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    title: Mapped[str] = mapped_column(String(200))
+    title: Mapped[str] = mapped_column(String(500))
     body: Mapped[str] = mapped_column(String(), default="")
     status: Mapped[str | None] = mapped_column(String(20), default="draft")
     created_at: Mapped[datetime] = mapped_column(server_default=func.now())
