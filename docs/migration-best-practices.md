@@ -64,11 +64,16 @@
    uv run alembic revision --autogenerate -m "add article status"
    ```
 
-5. 检查并补全迁移:
-   - review `upgrade()` / `downgrade()`
-   - 需要回填就在 upgrade 里加
+5. **验证并补全迁移** (autogenerate 输出不能直接信):
+   - 核对结构变更是否被正确捕获 (加列 / 改类型 / 约束等)。
+   - **实际跑一遍** `upgrade head` → `downgrade -1` → `upgrade head`,
+     看脚本执行有无异常。
+   - autogenerate 常见漏判要自查并修 (自行 / AI / 手改):
+     rename 误判成 drop+add、需 `USING` 的类型转换只给裸 alter、
+     enum 缺 `CREATE TYPE`、CHECK 约束没生成、`metadata` 等保留字属性名报错。
+   - 需要数据回填就在 upgrade 里加
      `op.execute("UPDATE articles SET status='draft' WHERE status IS NULL")`,
-     downgrade 写反向
+     downgrade 写反向。
 
 6. 本地验证可逆:
 
@@ -142,7 +147,10 @@ dev 分支攒了 `alpha_A..alpha_C`。发布者衍合成一条 rc:
    uv run alembic revision --autogenerate -m "rc1"
    ```
 
-4. review, 把 alpha 里的数据迁移并进 rc1 的 `upgrade()` / `downgrade()`。
+4. **rc 合并不是全自动, 需人工 / AI 协助合并**:
+   - autogenerate 出的 rc1 只含**结构**净 diff;
+     alpha 里的**数据迁移** (回填 / 转换) 要逐条从 `alpha_A..alpha_C` 抄进 rc1 的 `upgrade()` / `downgrade()`。
+   - 同样按阶段一步骤 5 的清单自查 autogenerate 漏判 (rename / USING / CREATE TYPE / CHECK / 保留字), 在 rc1 里修。
 
 5. 删掉 `alpha_A..alpha_C` 文件,
    链变为 `... -> R_last -> rc1`。
