@@ -1,4 +1,4 @@
-"""alpha0.0.1): add article status
+"""alpha(0.0.1): add article status
 
 Revision ID: e7c4cb7f7748
 Revises: ed44bb17ba4a

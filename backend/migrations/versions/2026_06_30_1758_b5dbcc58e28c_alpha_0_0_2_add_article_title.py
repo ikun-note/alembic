@@ -1,4 +1,4 @@
-"""alpha0.0.2): widen article title to 500
+"""alpha(0.0.2): widen article title to 500
 
 Revision ID: b5dbcc58e28c
 Revises: e7c4cb7f7748

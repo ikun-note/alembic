@@ -8,7 +8,7 @@ Created: 2026-06-29
 
 from datetime import datetime
 
-from sqlalchemy import CheckConstraint, String, func
+from sqlalchemy import Enum, String, func
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.models.base import Base
@@ -16,14 +16,11 @@ from app.models.base import Base
 
 class Article(Base):
     __tablename__ = "articles"
-    __table_args__ = (
-        CheckConstraint("status IN ('draft', 'published', 'archived')", name="status_values"),
-    )
 
     id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str] = mapped_column(String(500))
     content: Mapped[str] = mapped_column(String(), default="")
-    status: Mapped[str] = mapped_column(String(20), default="draft")
+    status: Mapped[str] = mapped_column(Enum("draft", "published", "archived", name="article_status"), default="draft")
     created_at: Mapped[datetime] = mapped_column(server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(server_default=func.now(), onupdate=func.now())
 

@@ -197,6 +197,13 @@ PR 合并前**必须验证** (upgrade / downgrade 闭环 + 数据检查) 并把�
 | **数据迁移 (回填 / 转换)** | 业务 SQL 出错、downgrade 残留脏数据 | 成对写 upgrade / downgrade; 验证 upgrade 后数据正确、downgrade 可还原 |
 | **PG ENUM 改值** | 删值 / 改名极难, 加值要兼顾旧版本代码 | 优先只加值; 验证存量与代码枚举一致 |
 
+**另外, autogenerate 在以下场景会生成不完整 / 错误的迁移, 光 review 不够, 必须人工补缺的 DDL 或整段重写:**
+
+- **重命名列 / 表** —— 生成 drop+add (丢数据), 改成 `alter_column(new_column_name=...)`。
+- **需 `USING` 的类型转换** —— 如 `varchar→enum`、`string→int`, autogenerate 只给裸 `alter_column`, 不加 `USING`, 存量数据转换必失败。
+- **PG 命名类型 (enum / domain)** —— 要先 `CREATE TYPE`, autogenerate 不会自动建。
+- **CHECK 约束** —— autogenerate 检测不稳定, 可能根本不生成 (约束建了等于没建)。
+
 一句话:**结构变更里凡是涉及"数据"或"不可逆"的, 合并前都要人工验证**;
 纯加列、加索引这类增量变更可以放宽。
 

@@ -1,4 +1,4 @@
-"""alpha0.0.3): add tags table
+"""alpha(0.0.3): add tags table
 
 Revision ID: d1b79f3bfb7a
 Revises: b5dbcc58e28c

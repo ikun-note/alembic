@@ -1,4 +1,4 @@
-"""alpha0.0.5): status not null + check
+"""alpha(0.0.5): status not null + check
 
 Revision ID: 8b729e8d7a05
 Revises: 6f3e753deaa3
