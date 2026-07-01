@@ -15,7 +15,6 @@ from app.core.config import get_settings
 from app.models.base import Base
 # Import model modules so they register on Base.metadata before autogenerate.
 import app.models.article  # noqa: F401
-import app.models.tag  # noqa: F401
 
 config = context.config
 
