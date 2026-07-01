@@ -204,6 +204,17 @@ PR 合并前**必须验证** (upgrade / downgrade 闭环 + 数据检查) 并把�
 - **PG 命名类型 (enum / domain)** —— 要先 `CREATE TYPE`, autogenerate 不会自动建。
 - **CHECK 约束** —— autogenerate 检测不稳定, 可能根本不生成 (约束建了等于没建)。
 
+**另:建模层保留字坑** ——
+`metadata`、`registry` 是 Declarative Base 的保留属性 (`Base.metadata` 即 MetaData 对象),
+不能用作列的 Python 属性。
+改个属性名 + `mapped_column("metadata", JSONB)` 显式指定 DB 列名即可,
+DB 列名仍可叫 `metadata`。
+
+**存量库已有 `metadata` 列时** ——
+接入 Alembic 不用改 DB:
+Python 属性换个名 (如 `meta`) 映射到该列 (`mapped_column("metadata", ...)`)。
+保留字问题只在 Python 侧, 不影响 DB 列。
+
 一句话:**结构变更里凡是涉及"数据"或"不可逆"的, 合并前都要人工验证**;
 纯加列、加索引这类增量变更可以放宽。
 
